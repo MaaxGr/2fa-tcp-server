@@ -18,15 +18,16 @@ fun main() {
 
     val prop = Properties().apply { load(file.inputStream()) }
 
+    val port = prop.getProperty("port", "8123").toInt()
     val passphrase = prop.getProperty("passphrase", null)
 
-    Main(passphrase)
+    Main(port, passphrase)
 }
 
-class Main(passphrase: String) {
+class Main(port: Int, passphrase: String) {
 
     init {
-        val tcpServer = TCPServer(passphrase)
+        val tcpServer = TCPServer(port, passphrase)
         tcpServer.addReceiver { message ->
             message.debug(this)
 

@@ -3,18 +3,14 @@ import de.maaxgr.twofatcpserver.entity.NetworkMessage
 import de.maaxgr.twofatcpserver.util.*
 import java.net.ServerSocket
 
-class TCPServer(passphrase: String) {
-
-    companion object {
-        const val PORT = 8123
-    }
+class TCPServer(private val port: Int, passphrase: String) {
 
     private val encryption = DESEncryption(passphrase)
     private val onReceive: MutableSet<(NetworkMessage) -> Unit> = mutableSetOf()
 
     init {
         Thread {
-            ServerSocket(PORT).acceptEndless { socket ->
+            ServerSocket(port).acceptEndless { socket ->
                 socket.getInputStream().readBufferedText().also { string ->
                     val decryptedString = encryption.decrypt(string)
                     val message = Gson().fromJson<NetworkMessage>(decryptedString, NetworkMessage::class.java)

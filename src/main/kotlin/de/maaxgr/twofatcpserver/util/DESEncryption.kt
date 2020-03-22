@@ -18,7 +18,7 @@ class DESEncryption(key: String) {
 
     @Throws(UnsupportedEncodingException::class, NoSuchAlgorithmException::class)
     private fun buildKey(myKey: String): SecretKeySpec {
-        var key: ByteArray = myKey.toByteArray(charset("UTF-8"))
+        var key: ByteArray = myKey.toByteArray(Charsets.UTF_8)
         val sha: MessageDigest = MessageDigest.getInstance("SHA-1")
         key = sha.digest(key)
         key = Arrays.copyOf(key, 16)
@@ -29,7 +29,7 @@ class DESEncryption(key: String) {
         try {
             val cipher = Cipher.getInstance(CIPHER)
             cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-            return Base64.getEncoder().encodeToString(cipher.doFinal(string.toByteArray(charset("UTF-8"))))
+            return Base64.getEncoder().encodeToString(cipher.doFinal(string.toByteArray(Charsets.UTF_8)))
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -11,6 +11,7 @@
 * Create config.properties in same folder as jar with content: 
 ```
 passphrase=<MY_PASSPHRASE>
+port=<TCP-Port> (default is 8123)
 ```
 * Start server with: `java -jar 2faTCPServer-1.0.jar`
 
